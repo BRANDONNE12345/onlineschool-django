@@ -7,8 +7,9 @@ from users.models import User
 class Course(models.Model):
     title = models.CharField(max_length=200)
     description = models.TextField(blank=True)
-    teacher = models.ForeignKey(User, on_delete=models.CASCADE, related_name="courses")
+    teacher = models.ForeignKey(User, on_delete=models.CASCADE, related_name="courses", limit_choices_to={'role': 'ENSEIGNANT'})
     is_validated = models.BooleanField(default=False)
+    validated_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name="validated_courses", limit_choices_to={'role': 'SCOLARITE'})
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     
@@ -38,13 +39,25 @@ CONTENT_TYPE_CHOICES = [
 class Content(models.Model):
     chapter = models.ForeignKey('Chapter', on_delete=models.CASCADE, related_name="contents")
     content_type = models.CharField(max_length=10, choices=CONTENT_TYPE_CHOICES)
-    # Pour le contenu textuel
     text_content = models.TextField(blank=True, null=True)
-    # Pour les fichiers (images, PDF, vidéos)
     file_content = models.FileField(upload_to='contents/', blank=True, null=True)
-    
+    video_url = models.URLField(blank=True, null=True)
+
     def __str__(self):
         return f"{self.get_content_type_display()} dans {self.chapter.title}"
+
+
+
+# permet de savoir quels étudiants suivent quels cours.
+
+class Enrollment(models.Model):
+    student = models.ForeignKey(User, on_delete=models.CASCADE, related_name="enrollments", limit_choices_to={'role': 'ETUDIANT'})
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name="enrollments")
+    date_enrolled = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.student.username} inscrit à {self.course.title}"
+
 # ---------------------
 # Modèles pour Quiz et Évaluation
 # ---------------------
@@ -53,14 +66,22 @@ class Quiz(models.Model):
     title = models.CharField(max_length=200)
     number_of_attempts = models.IntegerField(default=1)
     auto_correction = models.BooleanField(default=True)
-    
+    duration = models.PositiveIntegerField(default=30)  # Durée en minutes
+
     def __str__(self):
         return self.title
+
+
+QUESTION_TYPE_CHOICES = [
+    ('TEXT', 'Réponse texte libre'),
+    ('MCQ', 'Choix multiple'),
+]
 
 class Question(models.Model):
     quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE, related_name="questions")
     text = models.TextField()
-    
+    question_type = models.CharField(max_length=10, choices=QUESTION_TYPE_CHOICES, default='MCQ')
+
     def __str__(self):
         return f"Question pour {self.quiz.title}"
 

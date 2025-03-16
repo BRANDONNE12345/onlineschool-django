@@ -1,0 +1,66 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Finance</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+
+    <div class="container">
+        <h1>Dashboard Finance</h1>
+
+        <div class="cards">
+            <div class="card">
+                <h3>Total Paiements</h3>
+                <p>{{ total_paiements }} €</p>
+            </div>
+            <div class="card">
+                <h3>Total Salaires</h3>
+                <p>{{ total_salaires }} €</p>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <h2>Historique des Paiements</h2>
+            <table>
+                <tr>
+                    <th>Étudiant</th>
+                    <th>Montant</th>
+                    <th>Date</th>
+                    <th>Méthode</th>
+                </tr>
+                {% for payment in payments %}
+                <tr>
+                    <td>{{ payment.student.username }}</td>
+                    <td>{{ payment.amount }} €</td>
+                    <td>{{ payment.date }}</td>
+                    <td>{{ payment.get_payment_method_display }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+
+        <div class="table-container">
+            <h2>Historique des Salaires</h2>
+            <table>
+                <tr>
+                    <th>Enseignant</th>
+                    <th>Montant</th>
+                    <th>Date</th>
+                </tr>
+                {% for salary in salaries %}
+                <tr>
+                    <td>{{ salary.teacher.username }}</td>
+                    <td>{{ salary.amount }} €</td>
+                    <td>{{ salary.date }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+
+</body>
+</html>

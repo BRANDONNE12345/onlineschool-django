@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'users.apps.UsersConfig',     # application users
     'courses.apps.CoursesConfig', # application courses
+    'chat.apps.ChatConfig',     # application chat
     'finance.apps.FinanceConfig', # application finance
 ]
 

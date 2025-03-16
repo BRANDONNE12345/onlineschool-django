@@ -1,17 +1,33 @@
 from django.db import models
-from users.models import User
+from django.conf import settings
 
-class Chat(models.Model):
-    participants = models.ManyToManyField(User, related_name="chats")
-    created_at = models.DateTimeField(auto_now_add=True)
-
-class Message(models.Model):
-    forum = models.ForeignKey(Forum, on_delete=models.CASCADE, related_name="messages")
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
-    content = models.TextField()
-    created_at = models.DateTimeField(auto_now_add=True)
-    parent = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name="replies")
+class ChatDeClasse(models.Model):
+    classe = models.CharField(max_length=255)
 
     def __str__(self):
-        return f"Message de {self.author.username} le {self.created_at.strftime('%Y-%m-%d %H:%M')}"
+        return f"Chat de {self.classe}"
 
+class MessageClasse(models.Model):
+    chat = models.ForeignKey(ChatDeClasse, on_delete=models.CASCADE, related_name="messages")
+    auteur = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    contenu = models.TextField()
+    date_envoye = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.auteur.username}: {self.contenu[:50]}..."
+
+class ChatB2B(models.Model):
+    etudiant = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="chats_etu")
+    enseignant = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="chats_prof")
+
+    def __str__(self):
+        return f"Chat {self.etudiant.username} - {self.enseignant.username}"
+
+class MessageB2B(models.Model):
+    chat = models.ForeignKey(ChatB2B, on_delete=models.CASCADE, related_name="messages")
+    auteur = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    contenu = models.TextField()
+    date_envoye = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.auteur.username}: {self.contenu[:50]}..."

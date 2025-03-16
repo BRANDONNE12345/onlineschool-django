@@ -1,0 +1,288 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Finance</title>
+    
+    <!-- Fichier CSS personnalisé -->
+    <link rel="stylesheet" href="{% static 'finance/style.css' %}">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css">
+    
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8f9fa;
+        }
+        /* Header & Container */
+        .dashboard-header {
+            background: linear-gradient(135deg, #4b6cb7, #182848);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+        .dashboard-container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+        .action-buttons {
+            margin-bottom: 20px;
+        }
+        .action-buttons a {
+            margin-right: 10px;
+        }
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        th, td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+        th {
+            background: #4b6cb7;
+            color: white;
+        }
+        /* Responsive */
+        @media (max-width: 768px) {
+            table, thead, tbody, th, td, tr {
+                display: block;
+            }
+            th {
+                text-align: right;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Topbar -->
+    <div class="container-fluid bg-dark">
+        <div class="row py-2 px-lg-5">
+            <div class="col-lg-6 text-center text-lg-left mb-2 mb-lg-0">
+                <div class="d-inline-flex align-items-center text-white">
+                    <small><i class="fa fa-phone-alt mr-2"></i>+33 1 23 45 67 89</small>
+                    <small class="px-3">|</small>
+                    <small><i class="fa fa-envelope mr-2"></i>contact@edukatefinance.com</small>
+                </div>
+            </div>
+            <div class="col-lg-6 text-center text-lg-right">
+                <div class="d-inline-flex align-items-center">
+                    <a class="text-white px-2" href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a class="text-white px-2" href="#"><i class="fab fa-twitter"></i></a>
+                    <a class="text-white px-2" href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a class="text-white px-2" href="#"><i class="fab fa-instagram"></i></a>
+                    <a class="text-white pl-2" href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Navbar -->
+    <div class="container-fluid p-0">
+        <nav class="navbar navbar-expand-lg bg-white navbar-light py-3 py-lg-0 px-lg-5">
+            <a href="{% url 'index' %}" class="navbar-brand ml-lg-3">
+                <h1 class="m-0 text-uppercase text-primary">
+                    <i class="fa fa-book-reader mr-3"></i>Edukate Finance
+                </h1>
+            </a>
+            <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarFinance">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-between px-lg-3" id="navbarFinance">
+                <div class="navbar-nav mx-auto py-0">
+                    <a href="{% url 'index' %}" class="nav-item nav-link">Home</a>
+                    <a href="{% url 'finance:payment_list' %}" class="nav-item nav-link">Paiements</a>
+                    <a href="{% url 'finance:salary_list' %}" class="nav-item nav-link">Salaires</a>
+                </div>
+               
+            </div>
+        </nav>
+    </div>
+    
+    <!-- Dashboard Finance -->
+    <div class="container mt-4">
+        <div class="dashboard-header">
+            <h1>Dashboard Finance</h1>
+            <p>Gestion des paiements et des salaires</p>
+        </div>
+        
+        <!-- Section Paiements -->
+        <div class="dashboard-container">
+            <div class="d-flex justify-content-between align-items-center">
+                <h2>Historique des Paiements</h2>
+                <div class="action-buttons">
+                    <a href="{% url 'finance:create_payment' %}" class="btn btn-primary">
+                        <i class="fa fa-plus"></i> Ajouter Paiement
+                    </a>
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Étudiant</th>
+                        <th>Montant</th>
+                        <th>Date</th>
+                        <th>Méthode</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for payment in payments %}
+                    <tr>
+                        <td>{{ payment.student.username }}</td>
+                        <td>{{ payment.amount }} €</td>
+                        <td>{{ payment.date|date:"Y-m-d" }}</td>
+                        <td>{{ payment.get_payment_method_display }}</td>
+                        <td>{{ payment.description }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="5">Aucun paiement enregistré.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- Section Salaires -->
+        <div class="dashboard-container">
+            <div class="d-flex justify-content-between align-items-center">
+                <h2>Historique des Salaires</h2>
+                <div class="action-buttons">
+                    <a href="{% url 'finance:create_salary' %}" class="btn btn-primary">
+                        <i class="fa fa-plus"></i> Ajouter Salaire
+                    </a>
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Enseignant</th>
+                        <th>Montant</th>
+                        <th>Date</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for salary in salaries %}
+                    <tr>
+                        <td>{{ salary.teacher.username }}</td>
+                        <td>{{ salary.amount }} €</td>
+                        <td>{{ salary.date|date:"Y-m-d" }}</td>
+                        <td>{{ salary.description }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="4">Aucun salaire enregistré.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+    <!-- Footer -->
+    <div class="container-fluid position-relative overlay-top bg-dark text-white-50 py-5" style="margin-top: 90px;">
+        <div class="container mt-5 pt-5">
+            <div class="row">
+                <div class="col-md-6 mb-5">
+                    <a href="{% url 'index' %}" class="navbar-brand">
+                        <h1 class="mt-n2 text-uppercase text-white">
+                            <i class="fa fa-book-reader mr-3"></i>Edukate Finance
+                        </h1>
+                    </a>
+                    <p class="m-0">Votre solution de gestion financière pour paiements et salaires.</p>
+                </div>
+                <div class="col-md-6 mb-5">
+                    <h3 class="text-white mb-4">Newsletter</h3>
+                    <div class="w-100">
+                        <div class="input-group">
+                            <input type="text" class="form-control border-light" style="padding: 30px;" placeholder="Votre adresse e-mail">
+                            <div class="input-group-append">
+                                <button class="btn btn-primary px-4">S'inscrire</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4 mb-5">
+                    <h3 class="text-white mb-4">Contact</h3>
+                    <p><i class="fa fa-map-marker-alt mr-2"></i>123 Rue, Paris, France</p>
+                    <p><i class="fa fa-phone-alt mr-2"></i>+33 1 23 45 67 89</p>
+                    <p><i class="fa fa-envelope mr-2"></i>contact@edukatefinance.com</p>
+                    <div class="d-flex justify-content-start mt-4">
+                        <a class="text-white mr-4" href="#"><i class="fab fa-2x fa-twitter"></i></a>
+                        <a class="text-white mr-4" href="#"><i class="fab fa-2x fa-facebook-f"></i></a>
+                        <a class="text-white mr-4" href="#"><i class="fab fa-2x fa-linkedin-in"></i></a>
+                        <a class="text-white" href="#"><i class="fab fa-2x fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-5">
+                    <h3 class="text-white mb-4">Nos Services</h3>
+                    <div class="d-flex flex-column justify-content-start">
+                        <a class="text-white-50 mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Gestion des paiements</a>
+                        <a class="text-white-50 mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Gestion des salaires</a>
+                        <a class="text-white-50 mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Rapports financiers</a>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-5">
+                    <h3 class="text-white mb-4">Liens Rapides</h3>
+                    <div class="d-flex flex-column justify-content-start">
+                        <a class="text-white-50 mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Politique de Confidentialité</a>
+                        <a class="text-white-50 mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Conditions d'Utilisation</a>
+                        <a class="text-white-50 mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>FAQ</a>
+                        <a class="text-white-50 mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Aide & Support</a>
+                        <a class="text-white-50" href="#"><i class="fa fa-angle-right mr-2"></i>Contact</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid bg-dark text-white-50 border-top py-4" style="border-color: rgba(256, 256, 256, .1) !important;">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 text-center text-md-left mb-3 mb-md-0">
+                    <p class="m-0">
+                        Copyright &copy;
+                        <a class="text-white" href="#">Edukate Finance</a>.
+                        All Rights Reserved.
+                    </p>
+                </div>
+                <div class="col-md-6 text-center text-md-right">
+                    <p class="m-0">
+                        Designed by <a class="text-white" href="https://htmlcodex.com">HTML Codex</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Bouton Back to Top -->
+    <a href="#" class="btn btn-lg btn-primary rounded-0 btn-lg-square back-to-top">
+        <i class="fa fa-angle-double-up"></i>
+    </a>
+    
+    <!-- JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+    <script src="{% static 'finance/js/main.js' %}"></script>
+</body>
+</html>

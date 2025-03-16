@@ -3,10 +3,8 @@ from django.contrib.auth.decorators import login_required
 from .models import Payment, Salary
 from .forms import PaymentForm, SalaryForm
 
-# Vue pour créer un paiement
 @login_required
 def create_payment(request):
-    # On peut limiter cette action aux membres du service de comptabilité si besoin
     if request.method == 'POST':
         form = PaymentForm(request.POST)
         if form.is_valid():
@@ -14,18 +12,17 @@ def create_payment(request):
             return redirect('finance:payment_list')
     else:
         form = PaymentForm()
-    return render(request, 'finance/create_payment.html', {'form': form})
+    # Utilise le template dans onlineschool/templates/create_payment.html
+    return render(request, 'create_payement.html', {'form': form})
 
-# Vue pour afficher la liste des paiements
 @login_required
 def payment_list(request):
     payments = Payment.objects.all().order_by('-date')
-    return render(request, 'finance/payment_list.html', {'payments': payments})
+    # Supposez que votre template se trouve dans onlineschool/templates/payment_list.html
+    return render(request, 'payment_list.html', {'payments': payments})
 
-# Vue pour créer une fiche de salaire
 @login_required
 def create_salary(request):
-    # On peut limiter cette action aux utilisateurs du service de comptabilité
     if request.method == 'POST':
         form = SalaryForm(request.POST)
         if form.is_valid():
@@ -33,10 +30,11 @@ def create_salary(request):
             return redirect('finance:salary_list')
     else:
         form = SalaryForm()
-    return render(request, 'finance/create_salary.html', {'form': form})
+    # Utilise le template dans onlineschool/templates/create_salary.html
+    return render(request, 'create_salary.html', {'form': form})
 
-# Vue pour afficher la liste des salaires
 @login_required
 def salary_list(request):
     salaries = Salary.objects.all().order_by('-date')
-    return render(request, 'finance/salary_list.html', {'salaries': salaries})
+    # Supposez que votre template se trouve dans onlineschool/templates/salary_list.html
+    return render(request, 'salary_list.html', {'salaries': salaries})

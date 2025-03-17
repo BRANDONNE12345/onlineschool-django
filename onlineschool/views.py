@@ -17,3 +17,15 @@ def dashboard_enseignant(request):
 
 def course(request):
     return render(request,'course.html')
+
+
+def about(request): 
+    return render(request,'about.html')
+
+def contact(request): 
+    return render(request,'contact.html')
+
+def team(request): 
+    return render(request,'team.html')
+    
+

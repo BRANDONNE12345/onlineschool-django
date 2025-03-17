@@ -1,0 +1,19 @@
+<nav class="navbar navbar-expand-lg bg-white navbar-light py-3 py-lg-0 px-lg-5">
+  <a href="{% url 'index' %}" class="navbar-brand ml-lg-3">
+      <h1 class="m-0 text-uppercase text-primary"><i class="fa fa-book-reader mr-3"></i>Edukate</h1>
+  </a>
+  <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+      <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse justify-content-between px-lg-3" id="navbarCollapse">
+      <div class="navbar-nav mx-auto py-0">
+          <a href="{% url 'index' %}" class="nav-item nav-link active">Home</a>
+          <a href="{% url 'about' %}" class="nav-item nav-link">About</a>
+          <a href="{% url 'course' %}" class="nav-item nav-link">Courses</a>
+          <a href="{% url 'dashboard_etudiant' %}" class="nav-item nav-link active">Dashboard Students</a>
+          <a href="{% url 'dashboard_finance' %}" class="nav-item nav-link active">Dashboard Finance</a>
+          <a href="{% url 'dashboard_enseignant' %}" class="nav-item nav-link active">Dashboard Enseignant</a>
+      </div>
+      <a href="contact.html" class="btn btn-primary py-2 px-4 d-none d-lg-block">Join Us</a>
+  </div>
+</nav>

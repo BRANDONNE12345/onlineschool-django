@@ -29,6 +29,9 @@ urlpatterns = [
     path('dashboard/enseignant/', views.dashboard_enseignant, name='dashboard_enseignant'),
 
     path('course/', views.course, name= 'course'),
+    path('about/', views.about, name= 'about'),
+    path('contact/', views.contact, name= 'contact'),
+    path('team/', views.team, name= 'team'),
 
 
 

@@ -13,3 +13,7 @@ def dashboard_finance(request):
 def dashboard_enseignant(request):
     # Vous pouvez également ajouter ici les variables de contexte nécessaires (par exemple, courses, quizzes, forum_messages, etc.)
     return render(request, 'dashboard_enseignant.html')
+
+
+def course(request):
+    return render(request,'course.html')

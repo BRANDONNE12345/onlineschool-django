@@ -21,7 +21,7 @@
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Ton fichier CSS principal -->
-    <link href="css/style.css" rel="stylesheet">
+    <link href="{%static 'css/style.css' %}" rel="stylesheet">
 
     <!-- Styles custom pour reproduire le design “dashboard” de l’exemple -->
     <style>
@@ -357,12 +357,11 @@
 
     <!-- JavaScript (librairies + script principal) -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
-    <script src="lib/easing/easing.min.js"></script>
-    <script src="lib/waypoints/waypoints.min.js"></script>
-    <script src="lib/counterup/counterup.min.js"></script>
-    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
-
+    <script src="{ %static 'lib/easing/easing.min.js %'}"></script>
+    <script src="{%static 'lib/waypoints/waypoints.min.js' %}"></script>
+    <script src="{ %static 'lib/counterup/counterup.min.js' %}"></script>
+    <script src="{ %static 'lib/owlcarousel/owl.carousel.min.js' %}"></script>
+{%static 
     <!-- Script custom -->
     <script src="js/main.js"></script>
 </body>

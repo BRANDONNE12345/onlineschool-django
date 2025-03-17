@@ -1,3 +1,7 @@
+
+
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -21,7 +25,7 @@
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Ton fichier CSS principal -->
-    <link href="css/style.css" rel="stylesheet">
+    <link href="{%static 'css/style.css' %}" rel="stylesheet">
 
     <!-- Styles custom pour reproduire le design “dashboard” de l’exemple -->
     <style>
@@ -63,63 +67,11 @@
 
 <body>
     <!-- Topbar Start -->
-    <div class="container-fluid bg-dark">
-        <div class="row py-2 px-lg-5">
-            <div class="col-lg-6 text-center text-lg-left mb-2 mb-lg-0">
-                <div class="d-inline-flex align-items-center text-white">
-                    <small><i class="fa fa-phone-alt mr-2"></i>+012 345 6789</small>
-                    <small class="px-3">|</small>
-                    <small><i class="fa fa-envelope mr-2"></i>info@example.com</small>
-                </div>
-            </div>
-            <div class="col-lg-6 text-center text-lg-right">
-                <div class="d-inline-flex align-items-center">
-                    <a class="text-white px-2" href="">
-                        <i class="fab fa-facebook-f"></i>
-                    </a>
-                    <a class="text-white px-2" href="">
-                        <i class="fab fa-twitter"></i>
-                    </a>
-                    <a class="text-white px-2" href="">
-                        <i class="fab fa-linkedin-in"></i>
-                    </a>
-                    <a class="text-white px-2" href="">
-                        <i class="fab fa-instagram"></i>
-                    </a>
-                    <a class="text-white pl-2" href="">
-                        <i class="fab fa-youtube"></i>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
+
     <!-- Topbar End -->
 
     <!-- Navbar Start -->
-    <div class="container-fluid p-0">
-        <nav class="navbar navbar-expand-lg bg-white navbar-light py-3 py-lg-0 px-lg-5">
-            <a href="index.html" class="navbar-brand ml-lg-3">
-                <h1 class="m-0 text-uppercase text-primary">
-                    <i class="fa fa-book-reader mr-3"></i>Edukate
-                </h1>
-            </a>
-            <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse justify-content-between px-lg-3" id="navbarCollapse">
-                <div class="navbar-nav mx-auto py-0">
-                    <a href="index.html" class="nav-item nav-link">Home</a>
-                    <a href="about.html" class="nav-item nav-link">About</a>
-                    <a href="course.html" class="nav-item nav-link">Courses</a>
-                    <!-- Lien vers le Dashboard -->
-                    <a href="student_dashboard.html" class="nav-item nav-link active">Dashboard</a>
-                    <a href="contact.html" class="nav-item nav-link">Contact</a>
-                </div>
-                <!-- Bouton logout ou zone user -->
-                <a href="#" class="btn btn-primary py-2 px-4 d-none d-lg-block">Logout</a>
-            </div>
-        </nav>
-    </div>
+
     <!-- Navbar End -->
 
     <!-- Dashboard Header (gradient) + container avec onglets -->
@@ -186,7 +138,7 @@
                     <!-- Exemple d'affichage d'un cours -->
                     <div class="col-lg-4 col-md-6 pb-4">
                         <a class="courses-list-item position-relative d-block overflow-hidden mb-2" href="#">
-                            <img class="img-fluid" src="img/courses-1.jpg" alt="">
+                            <img class="img-fluid" src="{% static 'img/courses-1.jpg'%}" alt="">
                             <div class="courses-text">
                                 <h4 class="text-center text-white px-3">
                                     Nom du cours
@@ -203,7 +155,7 @@
                     <!-- Duplique ou boucle pour tous les cours -->
                     <div class="col-lg-4 col-md-6 pb-4">
                         <a class="courses-list-item position-relative d-block overflow-hidden mb-2" href="#">
-                            <img class="img-fluid" src="img/courses-2.jpg" alt="">
+                            <img class="img-fluid" src="{% static 'img/courses-2.jpg'%}" alt="">
                             <div class="courses-text">
                                 <h4 class="text-center text-white px-3">Nom du cours 2</h4>
                                 <div class="border-top w-100 mt-3">
@@ -357,12 +309,11 @@
 
     <!-- JavaScript (librairies + script principal) -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
-    <script src="lib/easing/easing.min.js"></script>
-    <script src="lib/waypoints/waypoints.min.js"></script>
-    <script src="lib/counterup/counterup.min.js"></script>
-    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
-
+    <script src="{ %static 'lib/easing/easing.min.js %'}"></script>
+    <script src="{%static 'lib/waypoints/waypoints.min.js' %}"></script>
+    <script src="{ %static 'lib/counterup/counterup.min.js' %}"></script>
+    <script src="{ %static 'lib/owlcarousel/owl.carousel.min.js' %}"></script>
+{%static 
     <!-- Script custom -->
     <script src="js/main.js"></script>
 </body>

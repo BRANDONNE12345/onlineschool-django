@@ -30,7 +30,11 @@ urlpatterns = [
     path('dashboard/chat/', views.dashboard_chat, name='dashboard_chat'),
     path('chat/', include('chat.urls', namespace='chat')),
 
-    
+
+    path('course/', views.course, name= 'course'),
+    path('about/', views.about, name= 'about'),
+    path('contact/', views.contact, name= 'contact'),
+    path('team/', views.team, name= 'team'),
 
 
 

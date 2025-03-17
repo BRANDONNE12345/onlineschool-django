@@ -27,6 +27,9 @@ urlpatterns = [
     path('dashboard/etudiant/', views.dashboard_etudiant, name='dashboard_etudiant'),
     path('dashboard/finance/', views.dashboard_finance, name='dashboard_finance'),
     path('dashboard/enseignant/', views.dashboard_enseignant, name='dashboard_enseignant'),
+    path('dashboard/chat/', views.dashboard_chat, name='dashboard_chat'),
+    path('chat/', include('chat.urls', namespace='chat')),
+
     
 
 

@@ -9,7 +9,7 @@ class CustomUserAdmin(UserAdmin):
     model = User
 
     list_display = ('username', 'email', 'first_name', 'last_name', 'role', 'is_active', 'is_staff')
-    list_filter = ('role', 'is_staff', 'is_active')
+    list_filter = ('role', 'is_staff', 'is_active','is_approved')
     search_fields = ('username', 'email', 'first_name', 'last_name')
     ordering = ('username',)
 
@@ -56,5 +56,7 @@ class CustomUserAdmin(UserAdmin):
         updated = queryset.update(role='ADMIN', is_staff=True, is_superuser=True)
         self.message_user(request, f"{updated} utilisateur(s) mis à jour en tant qu'Administrateur.")
     set_as_admin.short_description = "Définir comme Administrateur"
-
+    def approve_users(self, request, queryset):
+        queryset.update(is_approved=True)
+    approve_users.short_description = "Approuver les utilisateurs sélectionnés"
 admin.site.register(User, CustomUserAdmin)

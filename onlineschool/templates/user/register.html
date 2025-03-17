@@ -1,0 +1,136 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inscription | EDUKATE</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <style>
+        /* Styles de base pour les pages d'authentification */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .auth-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .auth-box {
+            width: 350px;
+            padding: 20px;
+            background: #fff;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .auth-box h2 {
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .auth-box p {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 10px;
+            background: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .btn:hover {
+            background: #0056b3;
+        }
+
+        .auth-footer {
+            margin-top: 15px;
+            font-size: 14px;
+        }
+
+        .auth-footer a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .auth-footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="auth-container">
+        <div class="auth-box">
+            <h2>Inscription</h2>
+            <p>Créez un compte pour accéder à la plateforme.</p>
+            
+            {% if messages %}
+                <div class="messages">
+                    {% for message in messages %}
+                        <p class="{{ message.tags }}">{{ message }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+            
+            <form method="POST">
+                {% csrf_token %}
+                
+                <div class="form-group">
+                    <label for="id_username">Nom d'utilisateur</label>
+                    {{ form.username }}
+                </div>
+                
+               
+                <div class="form-group">
+                    <label for="id_password1">Mot de passe</label>
+                    {{ form.password1 }}
+                </div>
+
+                <div class="form-group">
+                    <label for="id_password2">Confirmez le mot de passe</label>
+                    {{ form.password2 }}
+                </div>
+
+                <button type="submit" class="btn">S'inscrire</button>
+            </form>
+
+            <p class="auth-footer">
+                Vous avez déjà un compte ? <a href="{% url 'login' %}">Connectez-vous</a>
+            </p>
+        </div>
+    </div>
+
+</body>
+</html>

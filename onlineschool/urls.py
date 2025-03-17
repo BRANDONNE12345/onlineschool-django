@@ -18,7 +18,8 @@ from django.contrib import admin
 from django.http import HttpResponse
 from django.urls import include, path
 from onlineschool import views
-
+from .views import login_view, logout_view
+from users.views import register
 
 urlpatterns = [
     
@@ -28,12 +29,12 @@ urlpatterns = [
     path('dashboard/finance/', views.dashboard_finance, name='dashboard_finance'),
     path('dashboard/enseignant/', views.dashboard_enseignant, name='dashboard_enseignant'),
     
-
-
-
+    path('login/', login_view, name='login'),
+    path('logout/', logout_view, name='logout'),
     path('finance/', include('finance.urls')),
     path('users/', include('users.urls')),
     path('courses/', include('courses.urls')),
-    
+    path('register/', register, name='register'),
+
 
 ]

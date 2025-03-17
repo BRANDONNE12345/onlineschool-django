@@ -8,9 +8,11 @@ class User(AbstractUser):
         ('SCOLARITE', 'Responsable de scolarité'),
         ('ENSEIGNANT', 'Enseignant'),
         ('ETUDIANT', 'Étudiant'),
-        ('COMPTA', 'Comptabilité'),
+        ('teacher', 'Enseignant'),
     ]
     role = models.CharField(max_length=20, choices=ROLE_CHOICES, default='ETUDIANT')
+    is_approved = models.BooleanField(default=False)
+    email = models.EmailField(unique=True)  # Assure-toi que l'email est unique
     def __str__(self):
         return f"{self.username} ({self.get_role_display()})"
     
